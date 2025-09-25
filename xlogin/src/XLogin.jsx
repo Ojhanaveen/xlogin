@@ -3,17 +3,15 @@ import { useState } from "react";
 export default function XLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState(""); // ✅ store error/success message
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // If fields are empty, browser will handle with "Please fill out this field."
-    // because of the 'required' attribute.
-
     if (username === "user" && password === "password") {
-      alert("Welcome, user!");
+      setMessage("Welcome, user!"); // ✅ success case
     } else {
-      alert("Invalid username or password");
+      setMessage("Invalid username or password"); // ✅ error case
     }
   };
 
@@ -28,7 +26,7 @@ export default function XLogin() {
             type="text"
             id="username"
             value={username}
-            required   // ✅ Forces browser to show "Please fill out this field."
+            required
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
@@ -39,13 +37,26 @@ export default function XLogin() {
             type="password"
             id="password"
             value={password}
-            required   // ✅ Same for password
+            required
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
         <button type="submit">Submit</button>
       </form>
+
+      {/* ✅ show message below form */}
+      {message && (
+        <p
+          style={{
+            marginTop: "10px",
+            color: message === "Welcome, user!" ? "green" : "red",
+            fontWeight: "bold",
+          }}
+        >
+          {message}
+        </p>
+      )}
     </div>
   );
 }
